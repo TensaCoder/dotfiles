@@ -1,0 +1,99 @@
+
+[manager]
+# Manager Layout: Parent (1/8), Current (4/8), Preview (3/8)
+ratio = [1, 4, 3]
+
+# Sorting
+sort_by = "natural"            # Sort files naturally (1.md < 2.md < 10.md)
+sort_sensitive = false          # Case-insensitive sorting
+sort_reverse = false            # Normal sorting order
+sort_dir_first = true           # Show directories first
+sort_translit = true            # Enable transliteration for sorting filenames with special characters
+
+# Line Mode: Show file size and last modified time
+linemode = "size_and_mtime"
+
+# Hidden Files and Symlinks
+# show_hidden = true              # Show hidden files (e.g., .gitignore)
+show_symlink = true             # Show symlink paths after filenames
+
+# Scrolling
+scrolloff = 3                   # Keep 3 lines above and below the cursor when scrolling through the list
+
+# Mouse Interaction
+mouse_events = ["click", "scroll", "move"]  # Enable basic mouse events for better interactivity
+
+# Title Formatting
+title_format = "{cwd}"          # Show the current working directory in the terminal title
+
+
+
+
+[preview]
+wrap = "yes"        # Enable word wrapping for better readability in code previews.
+tab_size = 4        # Set tab width to 4 spaces.
+
+# Image Preview Settings
+max_width = 1100     # Slightly increase the max width of the image.
+max_height = 1600     # Adjust the height to match, creating a larger preview without being too large.
+image_delay = 100   # Introduce a small delay (300ms) to prevent lag when quickly scrolling through the file list.
+
+# Image Processing
+image_filter = "triangle"   # Provides a good balance of quality and speed.
+image_quality = 75             # Set image quality to 75, enough for clarity without too much CPU usage.
+
+# Sixel Settings (for older image formats)
+sixel_fraction = 15            # Moderate sampling for better color accuracy without slowing down too much.
+
+# Ueberzug Settings (optional, if using Ueberzug for image previews)
+ueberzug_scale = 0.8           # Slight reduction in image size to ensure it fits better in the terminal.
+ueberzug_offset = [0.2, 0.2, -0.2, -0.2]  # Offset to adjust the image in the terminal if needed.
+
+
+
+
+
+[opener]
+edit = [
+    { run = 'nvim "$@"', block = true, for = "unix" }                 # Use Neovim on Unix
+]
+
+play = [
+    { run = 'vlc "$@"', orphan = true, for = "unix" }                # Use VLC on Unix for media files
+]
+
+open = [
+    { run = 'open "$@"', desc = "Open with default application" } # Open files with the default application on Unix
+]
+
+
+
+[open]
+prepend_rules = [
+    { name = "*.json", use = "edit" },                                   # Edit JSON files with Neovim
+    { name = "*.md", use = "edit" },                                     # Edit Markdown files with Neovim
+    { name = "*.txt", use = "edit" },                                    # Edit Text files with Neovim
+    { name = "*.html", use = [ "open", "edit" ] },                      # Open or edit HTML files
+
+
+    # Programming languages
+    { name = "*.py", use = "edit" },     # Edit Python files with Neovim
+    { name = "*.js", use = "edit" },     # Edit JavaScript files with Neovim
+    { name = "*.ts", use = "edit" },     # Edit TypeScript files with Neovim
+    { name = "*.go", use = "edit" },     # Edit Go files with Neovim
+    { name = "*.java", use = "edit" },   # Edit Java files with Neovim
+    { name = "*.c", use = "edit" },      # Edit C files with Neovim
+    { name = "*.cpp", use = "edit" },    # Edit C++ files with Neovim
+    { name = "*.rb", use = "edit" },     # Edit Ruby files with Neovim
+    { name = "*.php", use = "edit" },    # Edit PHP files with Neovim
+    { name = "*.sh", use = "edit" },     # Edit Shell scripts with Neovim
+    { name = "*.pl", use = "edit" },     # Edit Perl files with Neovim
+    { name = "*.rs", use = "edit" },     # Edit Rust files with Neovim
+    { name = "*.mm", use = "edit" },     # Edit Ojective-C and C++ files with Neovim
+]
+
+append_rules = [
+    { name = "*.mp4", use = "play" },                                   # Play MP4 videos with mpv
+    { name = "*.mkv", use = "play" },                                   # Play MKV videos with mpv
+    { name = "*", use = "open" },                                       # Fallback to default opening method for all other files
+]
