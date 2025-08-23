@@ -165,3 +165,5 @@ alias tls='tmux ls'
 alias tat='tmux attach -t'
 alias tkall='tmux kill-session -a'
 alias tkt='tmux kill-session -t'
+
+alias hibernate="sudo pmset -a hibernatemode 25 && sudo pmset sleepnow"
