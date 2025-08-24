@@ -1,6 +1,27 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
+
+#line added after looking on stackoverflow
+export PATH=/opt/homebrew/bin:$PATH
+export PATH="/opt/homebrew/sbin:$PATH"
+
+
+#line for jenv
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
+
+#line for OpenSSL
+export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
+
+# line for maven-jenkins-tomcat
+
+
+# line added for jenkins change of directory
+# export JENKINS_HOME = /Users/herschelmenezes/Herschel/.jenkins
+
+
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -107,6 +128,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias python=/opt/homebrew/bin/python3 	#error bcoz it doesnt use the homebrew version 
 
 # To set up shell integration for fzf, add this to your shell configuration file:
 source <(fzf --zsh)
@@ -117,38 +139,57 @@ export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 
 
-# alias nvim-kick="NVIM_APPNAME=kickstart nvim"
-alias nvim-astro="NVIM_APPNAME=AstroNvim nvim"
+# # alias nvim-kick="NVIM_APPNAME=kickstart nvim"
+# alias nvim-astro="NVIM_APPNAME=AstroNvim nvim"
+#
+#
+# function nvims() {
+#   local nv_items=("Default" "AstroVim")
+#   local nv_app=$(printf "%s\n" "${nv_items[@]}" | fzf --prompt=" Neovim Config 󰶻  " --height=~50% --layout=reverse --border --exit-0)
+#
+#   if [[ -z $nv_app ]]; then
+#     echo "Nothing selected"
+#     return 0
+#   elif [[ $nv_app == "Default" ]]; then
+#     nv_app=""
+#   else
+#     echo "Set $nvims_config to $nv_app"
+#   fi
+#
+#   echo "$nv_app" > "$nvims_config"
+#   alias vi="NVIM_APPNAME=${nv_app} nvim"
+#
+#   NVIM_APPNAME=$nv_app nvim $@
+# }
+#
+# # nvims
+# if [[ -x /usr/local/bin/nvim || -x /opt/homebrew/bin/nvim ]]; then
+#   nvims_config="${XDG_CACHE_HOME:-$HOME/.cache}/nvims"
+#   nvims_app=$(cat "$nvims_config")
+#   #echo "Bind Neovim to $nvims_app"
+#   alias vi="NVIM_APPNAME=${nvims_app} nvim"
+#   export EDITOR="vi"
+#   bindkey -s "^v" "nvims\n"
+# fi
 
 
-function nvims() {
-  local nv_items=("Default" "AstroVim")
-  local nv_app=$(printf "%s\n" "${nv_items[@]}" | fzf --prompt=" Neovim Config 󰶻  " --height=~50% --layout=reverse --border --exit-0)
+#Aliases for MongoDB
+alias start-mongod="brew services start mongodb/brew/mongodb-community"
+alias stop-mongod="brew services stop mongodb/brew/mongodb-community"
 
-  if [[ -z $nv_app ]]; then
-    echo "Nothing selected"
-    return 0
-  elif [[ $nv_app == "Default" ]]; then
-    nv_app=""
-  else
-    echo "Set $nvims_config to $nv_app"
-  fi
+#Aliases for Git
+#add here
+alias git-c="git commit -m"
 
-  echo "$nv_app" > "$nvims_config"
-  alias vi="NVIM_APPNAME=${nv_app} nvim"
+# Alias for Tomcat Server
+alias startup-tomcat="/Users/herschelmenezes/Applications/Tomcat/apache-tomcat-9.0.71/bin/startup.sh"
+alias shutdown-tomcat="/Users/herschelmenezes/Applications/Tomcat/apache-tomcat-9.0.71/bin/shutdown.sh"
 
-  NVIM_APPNAME=$nv_app nvim $@
-}
+# Alias for Jenkins
+alias restart-jenkins="brew services restart jenkins-lts"
+alias start-jenkins="brew services start jenkins-lts"
+alias stop-jenkins="brew services stop jenkins-lts"
 
-# nvims
-if [[ -x /usr/local/bin/nvim || -x /opt/homebrew/bin/nvim ]]; then
-  nvims_config="${XDG_CACHE_HOME:-$HOME/.cache}/nvims"
-  nvims_app=$(cat "$nvims_config")
-  #echo "Bind Neovim to $nvims_app"
-  alias vi="NVIM_APPNAME=${nvims_app} nvim"
-  export EDITOR="vi"
-  bindkey -s "^v" "nvims\n"
-fi
 
 
 alias ls='lsd'
@@ -166,4 +207,10 @@ alias tat='tmux attach -t'
 alias tkall='tmux kill-session -a'
 alias tkt='tmux kill-session -t'
 
-alias hibernate="sudo pmset -a hibernatemode 25 && sudo pmset sleepnow"
+alias powerdown="sudo pmset -a hibernatemode 25 && sudo pmset sleepnow"
+
+alias powerup="sudo pmset -a hibernatemode 3"
+
+alias deepsleep="sudo pmset -a hibernatemode 25 && sudo pmset -a standby 1 && sudo pmset -a standbydelayhigh 1 && sudo pmset -a standbydelaylow 1 && sudo pmset -a autopoweroff 1 && sudo pmset -a autopoweroffdelay 1 && echo 'Going to hibernate in 5 seconds...' && sleep 5 && sudo pmset sleepnow"
+
+alias wakeup="sudo pmset -a hibernatemode 3 standby 1 standbydelayhigh 86400 standbydelaylow 10800 autopoweroff 1 autopoweroffdelay 28800 && echo 'Sleep settings restored to normal'"
