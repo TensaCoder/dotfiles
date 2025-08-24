@@ -324,7 +324,7 @@ return {
 			graphql = {
 				capabilities = capabilities,
 				cmd = { 'graphql-lsp', 'server', '-m', 'stream' },
-				filetypes = { 'graphql', 'typescriptreact', 'javascriptreact' },
+				filetypes = { 'graphql'},
 				root_dir = require('lspconfig.util').root_pattern('.git', 'graphql.config.*'),
 			},
 

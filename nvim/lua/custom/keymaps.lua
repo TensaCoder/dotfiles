@@ -1,3 +1,5 @@
+-- _G.vim = vim or {}
+
 local M = {}
 
 function M.setup()
