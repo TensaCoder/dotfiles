@@ -22,6 +22,9 @@ echo "🧠 Installing GUI apps via Homebrew..."
 brew install --cask clippy
 brew install --cask iterm2
 brew install --cask visual-studio-code
+brew install --cask google-chrome
+brew install --cask firefox
+
 
 echo "🔨 Installing CLI tools via Homebrew..."
 brew install lsd nvim yazi tmux
