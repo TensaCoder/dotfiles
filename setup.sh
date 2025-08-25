@@ -24,6 +24,9 @@ brew install --cask obsidian
 brew install --cask iterm2
 brew install --cask visual-studio-code
 brew install --cask utm
+brew install --cask arc
+brew install --cask windows-app
+
 
 echo "🔨 Installing CLI tools via Homebrew..."
 brew install lsd nvim yazi tmux
