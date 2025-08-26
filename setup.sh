@@ -11,12 +11,20 @@ echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 echo "🎨 Installing Oh My Zsh..."
+export RUNZSH=no
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 echo "📦 Installing zsh-autosuggestions and zsh-syntax-highlighting..."
 ZSH_CUSTOM=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
 git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+
+
+echo "⚙️ Updating ~/.zshrc to enable plugins..."
+# Replace plugins line with desired plugins
+sed -i '' 's/^plugins=(.*)$/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc || {
+  echo "plugins=(git zsh-autosuggestions zsh-syntax-highlighting)" >> ~/.zshrc
+}
 
 echo "🧠 Installing GUI apps via Homebrew..."
 brew install --cask clippy
