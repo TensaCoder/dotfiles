@@ -1,5 +1,5 @@
 
-[manager]
+[mgr]
 # Manager Layout: Parent (1/8), Current (4/8), Preview (3/8)
 ratio = [1, 4, 3]
 

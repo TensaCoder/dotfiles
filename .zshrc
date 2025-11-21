@@ -8,8 +8,8 @@ export PATH="/opt/homebrew/sbin:$PATH"
 
 
 #line for jenv
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
+# export PATH="$HOME/.jenv/bin:$PATH"
+# eval "$(jenv init -)"
 
 
 #line for OpenSSL
@@ -207,6 +207,10 @@ alias tat='tmux attach -t'
 alias tkall='tmux kill-session -a'
 alias tkt='tmux kill-session -t'
 
+alias cd-epm='cd /Users/herschel.menezes/Projects/EPM/epm-f1e'
+alias cd-epw='cd /Users/herschel.menezes/Projects/EPW/epw-f1e'
+alias cd-mv3='cd "/Users/herschel.menezes/Projects/epx-v3/epx-v3-browser-extensions"'
+
 alias powerdown="sudo pmset -a hibernatemode 25 && sudo pmset sleepnow"
 
 alias powerup="sudo pmset -a hibernatemode 3"
@@ -214,3 +218,4 @@ alias powerup="sudo pmset -a hibernatemode 3"
 alias deepsleep="sudo pmset -a hibernatemode 25 && sudo pmset -a standby 1 && sudo pmset -a standbydelayhigh 1 && sudo pmset -a standbydelaylow 1 && sudo pmset -a autopoweroff 1 && sudo pmset -a autopoweroffdelay 1 && echo 'Going to hibernate in 5 seconds...' && sleep 5 && sudo pmset sleepnow"
 
 alias wakeup="sudo pmset -a hibernatemode 3 standby 1 standbydelayhigh 86400 standbydelaylow 10800 autopoweroff 1 autopoweroffdelay 28800 && echo 'Sleep settings restored to normal'"
+export PATH="/opt/homebrew/opt/conan@1/bin:$PATH"

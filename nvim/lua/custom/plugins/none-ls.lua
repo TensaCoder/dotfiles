@@ -21,7 +21,7 @@ return {
 				'stylua', -- Formatter for Lua
 				'terraform_fmt', -- Formatter for Terraform
 				'sqlfluff', -- Formatter for SQL
-				'hadolint', -- Linter for Dockerfile
+				-- 'hadolint', -- Linter for Dockerfile
 				'yamllint', -- Linter for YAML
 				'markdownlint', -- Linter for Markdown
 			},
@@ -69,7 +69,7 @@ return {
 			},
 
 			-- Dockerfile
-			diagnostics.hadolint,
+			-- diagnostics.hadolint,
 
 			-- YAML
 			diagnostics.yamllint.with {

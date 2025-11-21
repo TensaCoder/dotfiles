@@ -27,7 +27,7 @@ sed -i '' 's/^plugins=(.*)$/plugins=(git zsh-autosuggestions zsh-syntax-highligh
 }
 
 echo "🧠 Installing GUI apps via Homebrew..."
-brew install --cask clippy
+brew install --cask clipy
 brew install --cask obsidian
 brew install --cask iterm2
 brew install --cask visual-studio-code
@@ -53,6 +53,9 @@ ln -sf $DOTFILES_DIR/nvim/* ~/.config/nvim/
 
 echo "🔗 Linking tmux config..."
 ln -sf $DOTFILES_DIR/tmux/.tmux.conf ~/.tmux.conf
+
+echo "📦 Installing tmux plugin manager..."
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 echo "🔗 Linking yazi config..."
 mkdir -p ~/.config/yazi

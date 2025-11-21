@@ -1,4 +1,4 @@
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on   = ["W"]
 run  = "tab_close" # Close current tab
 desc = "Close current tab"
