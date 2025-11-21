@@ -1,0 +1,118 @@
+{
+  "editor.fontSize": 14,
+  "debug.console.fontSize": 14,
+  "scm.inputFontSize": 14,
+  "terminal.integrated.fontSize": 14,
+  "notebook.markup.fontSize": 14,
+  "notebook.outputFontSize": 14,
+  "code-runner.runInTerminal": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "explorer.confirmDragAndDrop": false,
+  "explorer.confirmDelete": false,
+  "liveServer.settings.CustomBrowser": "chrome",
+  "debug.javascript.defaultRuntimeExecutable": {
+    "pwa-node": "node"
+  },
+  "notebook.output.textLineLimit": 1000,
+  "editor.inlineSuggest.enabled": true,
+  "go.toolsManagement.autoUpdate": true,
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false,
+    "yaml": false,
+    "python": false,
+    "go": true,
+    "shellscript": false,
+    "javascript": true,
+    "javascriptreact": true,
+    "django-html": false,
+    "csharp": true,
+    "css": false
+  },
+  "editor.tokenColorCustomizations": {
+    "[*Light*]": {
+      "textMateRules": [
+        {
+          "scope": "ref.matchtext",
+          "settings": {
+            "foreground": "#000"
+          }
+        }
+      ]
+    },
+    "[*Dark*]": {
+      "textMateRules": [
+        {
+          "scope": "ref.matchtext",
+          "settings": {
+            "foreground": "#fff"
+          }
+        }
+      ]
+    },
+    "textMateRules": []
+  },
+  "editor.formatOnSave": true,
+  "hardhat.telemetry": true,
+  "editor.wordWrap": "on",
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "solidity.telemetry": false,
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "boot-java.rewrite.reconcile": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "files.associations": {
+    ".env*": "dotenv",
+    "*.html": "html",
+    "iostream": "cpp",
+    "istream": "cpp",
+    "ios": "cpp",
+    "ostream": "cpp",
+    "streambuf": "cpp",
+    "__locale": "cpp",
+    "string": "cpp",
+    "string_view": "cpp"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "markdown-preview-enhanced.codeBlockTheme": "dark.css",
+  "markdown-preview-enhanced.previewTheme": "github-dark.css",
+  "dotenv.enableAutocloaking": false,
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.accessibilitySupport": "off",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "github.copilot.editor.enableAutoCompletions": true,
+  "[cpp]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+  },
+  "vim.commandLineModeKeyBindings": [],
+  "editor.minimap.enabled": false,
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "extensions.experimental.affinity": {
+    "vscodevim.vim": 1
+  },
+  "vim.useSystemClipboard": true,
+  "editor.lineNumbers": "relative",
+  "vscode_custom_css.imports": [
+    "file:///Users/herschelmenezes/dotfiles/vscode/custom-vscode.css"
+  ],
+  "editor.fontFamily": "FiraCode Nerd Font",
+  "terminal.integrated.fontLigatures.enabled": true,
+  "editor.fontLigatures": true
+}
