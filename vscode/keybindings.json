@@ -1,0 +1,261 @@
+// Place your key bindings in this file to override the defaults
+[
+    // Navigation
+    {
+        "key": "ctrl-h",
+        "command": "workbench.action.navigateLeft"
+    },
+    {
+        "key": "ctrl-l",
+        "command": "workbench.action.navigateRight"
+    },
+    {
+        "key": "ctrl-k",
+        "command": "workbench.action.navigateUp"
+    },
+    {
+        "key": "ctrl-j",
+        "command": "workbench.action.navigateDown"
+    },
+    {
+        "key": "space space",
+        "command": "workbench.action.showAllEditors",
+        "when": "vim.mode == 'Normal' && (editorTextFocus || !inputFocus)"
+    },
+    {
+        "key": "\\",
+        "command": "runCommands",
+        "when": "vim.mode == 'Normal' && (editorTextFocus || !inputFocus) && !sideBarFocus",
+        "args": {
+            "commands": [
+                "workbench.action.toggleSidebarVisibility",
+                "workbench.files.action.focusFilesExplorer"
+            ]
+        },
+    },
+    {
+        "key": "\\",
+        "command": "runCommands",
+        "when": "sideBarFocus && !inputFocus",
+        "args": {
+            "commands": [
+                "workbench.action.toggleSidebarVisibility",
+                "workbench.action.focusActiveEditorGroup"
+            ]
+        }
+    },
+    {
+        "key": "\\",
+        "command": "workbench.action.toggleSidebarVisibility",
+        "when": "vim.mode == 'Normal' && editorTextFocus && foldersViewVisible"
+    },
+    {
+        "key": "s v",
+        "command": "workbench.action.splitEditor",
+        "when": "(vim.mode == 'Normal' || vim.mode == 'Visual') && (editorTextFocus || !inputFocus)"
+    },
+    {
+        "key": "s h",
+        "command": "workbench.action.splitEditorDown",
+        "when": "(vim.mode == 'Normal' || vim.mode == 'Visual') && (editorTextFocus || !inputFocus)"
+    },
+    {
+        "key": "tab",
+        "command": "workbench.action.nextEditorInGroup",
+        "when": "(vim.mode == 'Normal' || vim.mode == 'Visual') && (editorTextFocus || !inputFocus)"
+    },
+    {
+        "key": "shift-tab",
+        "command": "workbench.action.previousEditorInGroup",
+        "when": "(vim.mode == 'Normal' || vim.mode == 'Visual') && (editorTextFocus || !inputFocus)"
+    },
+    {
+        "key": "g g",
+        "command": "cursorTop",
+        "when": "vim.mode == 'Normal' && (editorTextFocus || !inputFocus)"
+    },
+    // Coding
+    {
+        "key": "space c a",
+        "command": "editor.action.codeAction",
+        "when": "vim.mode == 'Normal' && editorTextFocus"
+    },
+    {
+        "key": "shift-k",
+        "command": "editor.action.moveLinesUpAction",
+        // "when": "vim.mode == 'VisualLine' && editorTextFocus"
+        "when": "vim.mode != 'Insert' && editorTextFocus"
+    },
+    {
+        "key": "shift-j",
+        "command": "editor.action.moveLinesDownAction",
+        // "when": "vim.mode == 'VisualLine' && editorTextFocus"
+        "when": "vim.mode != 'Insert' && editorTextFocus"
+    },
+    {
+        "key": "shift-k",
+        "command": "editor.action.showHover",
+        "when": "vim.mode == 'Normal' && editorTextFocus"
+    },
+    {
+        "key": "space r n",
+        "command": "editor.action.rename",
+        "when": "vim.mode == 'Normal' && editorTextFocus"
+    },
+    // TODO: change to "g s"
+    {
+        "key": "g s",
+        "command": "workbench.action.gotoSymbol",
+        "when": "vim.mode == 'Normal' && editorTextFocus"
+    },
+    // {
+    //     "key": "space space",
+    //     "command": "workbench.action.quickOpen",
+    //     "when": "vim.mode == 'Normal' && (editorTextFocus || !inputFocus)"
+    // },
+    {
+        "key": "g d",
+        "command": "editor.action.revealDefinition",
+        "when": "vim.mode == 'Normal' && editorTextFocus"
+    },
+    {
+        "key": "g r",
+        "command": "editor.action.goToReferences",
+        "when": "vim.mode == 'Normal' && editorTextFocus"
+    },
+    {
+        "key": "g i",
+        "command": "editor.action.goToImplementation",
+        "when": "vim.mode == 'Normal' && editorTextFocus"
+    },
+    {
+        "key": "s g",
+        "command": "workbench.action.findInFiles",
+        "when": "vim.mode == 'Normal' && (editorTextFocus || !inputFocus)"
+    },
+    {
+        "key": "s f",
+        "command": "workbench.action.quickOpen",
+        "when": "vim.mode != 'Insert' && (editorTextFocus || !inputFocus)"
+    },
+    {
+        "key": "s p",
+        "command": "workbench.action.showCommands",
+        "when": "vim.mode != 'Insert' && (editorTextFocus || !inputFocus)"
+    },
+    {
+        "key": "g t",
+        "command": "runCommands",
+        "when": "vim.mode == 'Normal' && (editorTextFocus || !inputFocus)",
+        "args": {
+            "commands": [
+                "workbench.view.scm",
+                "workbench.scm.focus"
+            ]
+        }
+    },
+    // File Explorer
+    {
+        "key": "r",
+        "command": "renameFile",
+        // "when": "explorerViewletFocus"
+        "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "c",
+        "command": "filesExplorer.copy",
+        // "when": "explorerViewletFocus"
+        "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "p",
+        "command": "filesExplorer.paste",
+        // "when": "explorerViewletFocus"
+        "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "x",
+        "command": "filesExplorer.cut",
+        // "when": "explorerViewletFocus"
+        "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "d",
+        "command": "deleteFile",
+        // "when": "explorerViewletFocus"
+        "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "a",
+        "command": "explorer.newFile",
+        // "when": "explorerViewletFocus"
+        "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "s",
+        "command": "explorer.openToSide",
+        // "when": "explorerViewletFocus"
+        "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+    },
+    {
+        "key": "shift-s",
+        "command": "runCommands",
+        // "when": "explorerViewletFocus", f
+        "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus",
+        "args": {
+            "commands": [
+                "workbench.action.splitEditorDown",
+                "explorer.openAndPassFocus",
+                "workbench.action.closeOtherEditors"
+            ]
+        }
+    },
+    {
+        "key": "enter",
+        "command": "explorer.openAndPassFocus",
+        "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceIsFolder && !inputFocus"
+    },
+    {
+        "key": "enter",
+        "command": "list.toggleExpand",
+        "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && explorerResourceIsFolder && !inputFocus"
+    },
+    // Quick Picker navigation
+    {
+        "key": "tab",
+        "command": "quickInput.next",
+        "when": "inQuickInput && quickInputType == 'quickPick'"
+    },
+    {
+        "key": "shift+tab",
+        "command": "quickInput.previous",
+        "when": "inQuickInput && quickInputType == 'quickPick'"
+    },
+    // Resizing VS Code windows and Panels
+    {
+        "key": "ctrl+cmd+left",
+        "command": "workbench.action.decreaseViewWidth",
+        "when": "vim.mode == 'Normal' && editorTextFocus"
+    },
+    {
+        "key": "ctrl+cmd+right",
+        "command": "workbench.action.increaseViewWidth",
+        "when": "vim.mode == 'Normal' && editorTextFocus"
+    },
+    {
+        "key": "ctrl+cmd+up",
+        "command": "workbench.action.increaseViewHeight",
+        "when": "vim.mode == 'Normal' && editorTextFocus"
+    },
+    {
+        "key": "ctrl+cmd+down",
+        "command": "workbench.action.decreaseViewHeight",
+        "when": "vim.mode == 'Normal' && editorTextFocus"
+    },
+    // Terminal
+    {
+        "key": "alt+m",
+        "command": "workbench.action.toggleMaximizedPanel",
+        "when": "terminal.active && vim.mode !='Insert'"
+    }
+]
