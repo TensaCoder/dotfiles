@@ -264,18 +264,12 @@
         "when": "editorFocus && findWidgetVisible"
     },
     {
-        "key": "alt+b",
-        "command": "runCommands",
+        "key": "space t",
+        "command": "workbench.action.terminal.sendSequence",
         "args": {
-            "commands": [
-                {
-                    "command": "workbench.action.terminal.sendSequence",
-                    "args": {
-                        "text":"open \"$HOME/dotfiles/vscode/index.html\"\u000D"
-                    }
-                }
-            ]
-        }
+            "text": "open \"$HOME/dotfiles/vscode/index.html\"\u000D"
+        },
+        "when": "vim.mode == 'Normal' && editorTextFocus"
     },
     {
         "key": "space b",
