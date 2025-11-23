@@ -114,5 +114,23 @@
   ],
   "editor.fontFamily": "FiraCode Nerd Font",
   "terminal.integrated.fontLigatures.enabled": true,
-  "editor.fontLigatures": true
+  "editor.fontLigatures": true,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<C-d>"],
+      "after": ["<C-d>", "z", "z"]
+    },
+    {
+      "before": ["<C-u>"],
+      "after": ["<C-u>", "z", "z"]
+    },
+    {
+      "before": ["<C-f>"],
+      "after": ["<C-f>", "z", "z"]
+    },
+    {
+      "before": ["<C-b>"],
+      "after": ["<C-b>", "z", "z"]
+    }
+  ],
 }

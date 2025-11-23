@@ -1,0 +1,747 @@
+# Complete Vim & VS Code Shortcuts Reference
+
+**Comprehensive collection of Vim motions, commands, and VS Code keybindings**
+
+================================================================================
+
+TABLE OF CONTENTS
+
+1. QUICK REFERENCE CARD
+2. Essential Vim Commands
+3. Intermediate Vim Features
+4. Advanced Vim Tips
+5. VS Code Custom Keybindings
+
+
+================================================================================
+
+QUICK REFERENCE CARD
+
+ESSENTIAL MOVEMENTS
+───────────────────
+h j k l       ← ↓ ↑ →
+w b e         Word navigation
+{ }           Paragraph navigation
+gg G          Start/end of file
+$ 0 ^         End/start/first char of line
+f F t T ; ,   Find character on line
+
+
+ESSENTIAL OPERATORS
+───────────────────
+d             Delete
+y             Yank (copy)
+c             Change
+p P           Paste after/before
+u Ctrl+r      Undo/redo
+.             Repeat
+
+
+ESSENTIAL MODES
+───────────────
+i a I A o O   Insert mode variants
+v V Ctrl+v    Visual modes
+Esc           Normal mode
+:             Command mode
+
+
+TEXT OBJECTS
+────────────
+iw aw         Inner/around word
+i" a"         Inner/around quotes
+i( a(         Inner/around ()
+i{ a{         Inner/around {}
+it at         Inner/around tags
+
+
+================================================================================
+
+ESSENTIAL VIM COMMANDS
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXIT & SAVE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+:q                     Quit/exit Vim
+:w                     Save file
+:wq                    Save and quit
+:q!                    Quit without saving
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BASIC MOVEMENT (hjkl)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+h                      Move left
+j                      Move down
+k                      Move up
+l                      Move right
+{count}h/j/k/l         Repeat movement N times (e.g., 5j)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LINE NAVIGATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+$                      End of line
+^                      First non-blank character
+0                      Start of line
+G                      End of file
+gg                     Start of file
+{count}G               Go to specific line (e.g., 10G)
+H                      High - first visible line on screen
+M                      Middle - middle visible line
+L                      Low - last visible line
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CHARACTER FIND NAVIGATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+f{char}                Find character forward on line
+F{char}                Find character backward on line
+t{char}                Till character forward (stop before)
+T{char}                Till character backward (stop before)
+;                      Repeat last f/F/t/T forward
+,                      Repeat last f/F/t/T backward
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WORD NAVIGATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+w                      Start of next word
+b                      Start of previous word
+e                      End of next word
+W                      Start of next WORD (ignoring symbols)
+B                      Start of previous WORD
+E                      End of next WORD
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PARAGRAPH NAVIGATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+}                      Next paragraph
+{                      Previous paragraph
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCREEN POSITIONING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+zz                     Center cursor line on screen
+zt                     Place cursor line at top
+zb                     Place cursor line at bottom
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SCROLLING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+Ctrl+e                 Scroll down
+Ctrl+y                 Scroll up
+Ctrl+d                 Scroll down half page
+Ctrl+u                 Scroll up half page
+Ctrl+f                 Scroll forward full page
+Ctrl+b                 Scroll backward full page
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BRACKET & PAIR NAVIGATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+%                      Jump to matching brace/bracket/parenthesis
+[{                     Jump to opening curly brace of block
+]}                     Jump to closing curly brace of block
+[(                     Jump to opening parenthesis of block
+])                     Jump to closing parenthesis of block
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEARCH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+/{pattern}             Search forward
+?{pattern}             Search backward
+n                      Next search result
+N                      Previous search result
+*                      Search forward for word under cursor
+#                      Search backward for word under cursor
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+JUMP LIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+Ctrl+o                 Jump back in jump list
+Ctrl+i                 Jump forward in jump list
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MARKS (BOOKMARKS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+m{letter}              Mark position (lowercase=file-local, uppercase=global)
+`{letter}              Jump to bookmark
+``                     Toggle between last two positions
+`.                     Jump to last edit position
+
+================================================================================
+
+INSERT MODE
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ENTERING INSERT MODE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+i                      Insert before cursor
+a                      Insert after cursor
+I                      Insert at beginning of line
+A                      Insert at end of line
+o                      Open new line below
+O                      Open new line above
+s                      Replace current character (enters insert mode)
+c                      Change (delete and insert)
+R                      Enter replace mode
+Esc                    Exit insert mode
+
+================================================================================
+
+OPERATORS & EDITING
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CORE OPERATORS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+y                      Yank (copy)
+d                      Delete
+c                      Change (delete and insert)
+{operator}{motion}     Apply operator to motion (e.g., dw, yw)
+{operator}{operator}   Apply to whole line (e.g., dd, yy)
+{operator}$ or D/C/Y   Apply to end of line
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DELETE EXAMPLES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+dw                     Delete to end of word
+dj                     Delete current and next line
+dt{char}               Delete till character
+dd                     Delete entire line
+D                      Delete to end of line
+diw                    Delete inner word
+daw                    Delete around word
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+YANK (COPY) EXAMPLES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+yy                     Copy entire line
+yw                     Copy to end of word
+yiw                    Copy inner word
+yaw                    Copy around word
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CHANGE EXAMPLES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+cw                     Change to end of word
+ct{char}               Change till character
+cc                     Change entire line
+C                      Change to end of line
+ciw                    Change inner word
+caw                    Change around word
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PASTE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+p                      Paste after cursor
+P                      Paste before cursor
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+UNDO & REDO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+u                      Undo change
+Ctrl+r                 Redo change
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REPEAT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+.                      Repeat last change
+
+================================================================================
+
+VISUAL MODE
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+VISUAL MODE COMMANDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+v                      Enter visual mode (character)
+V                      Enter visual line mode
+Ctrl+v                 Enter visual block mode
+Esc                    Exit visual mode
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+VISUAL BLOCK MODE OPERATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+I (in block)           Insert at beginning of all lines
+A (in block)           Insert at end of all lines
+Esc (in block)         Apply changes to all lines
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+VISUAL OPERATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+{motion}d              Visually select and delete
+{motion}y              Visually select and copy
+{motion}c              Visually select and change
+o                      Toggle cursor between start/end of selection
+
+================================================================================
+
+TEXT OBJECTS
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TEXT OBJECT SYNTAX
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+i{char}                Inner text object (inside)
+a{char}                Around text object (including)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+COMMON TEXT OBJECTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+iw / aw                Inner/around word
+i" / a"                Inside/around double quotes
+i' / a'                Inside/around single quotes
+i( / a(                Inside/around parentheses
+i[ / a[                Inside/around square brackets
+i{ / a{                Inside/around curly braces
+it / at                Inside/around tags
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TEXT OBJECT EXAMPLES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+diw                    Delete inner word
+di"                    Delete inside double quotes
+da"                    Delete including double quotes
+ci(                    Change inside parentheses
+ya{                    Copy including curly braces
+vit                    Visual select inside tags
+
+================================================================================
+
+INTERMEDIATE VIM FEATURES
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CODE FOLDING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+Zm                     Fold all code blocks (including nested)
+Zr                     Open/unfold all folds
+zc                     Fold individual code block
+zo                     Unfold individual code block
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INDENTING AND SHIFTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+==                     Auto-indent current line
+=                      Auto-indent visually selected lines
+>                      Shift selected lines right
+<                      Shift selected lines left
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LINE JOINING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+J                      Join current line with next
+{count}J               Join multiple lines
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CASE TOGGLING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+~                      Toggle case of character under cursor
+guw                    Make word lowercase
+guW                    Make WORD lowercase
+guu                    Make entire line lowercase
+gUw                    Make word UPPERCASE
+gUW                    Make WORD UPPERCASE
+gUU                    Make entire line UPPERCASE
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NUMBER OPERATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+Ctrl+a                 Increment number under cursor
+Ctrl+x                 Decrement number under cursor
+
+================================================================================
+
+SEARCH & REPLACE
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BASIC SEARCH AND REPLACE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+:%s/old/new/g          Replace all in file
+:%s/old/new/gc         Replace all with confirmation
+:%s/\<old\>/new/g    Replace whole word in file
+:s/old/new/g           Replace all on current line
+:s/old/new             Replace first on current line
+:{range}s/old/new/g    Replace in range (e.g., :10,20s/old/new/g)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PATTERN DELETION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+:g/{pattern}/d         Delete all lines matching pattern
+:v/{pattern}/d         Delete all lines NOT matching pattern
+
+================================================================================
+
+ADVANCED FEATURES
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MACRO RECORDING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+q{letter}              Start recording macro (e.g., qa)
+q                      Stop recording
+@{letter}              Execute macro (e.g., @a)
+{count}@{letter}       Execute macro N times (e.g., 15@a)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REGISTERS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+"{letter}y             Yank into named register
+"{letter}d             Delete into named register
+"{letter}p             Paste from named register
+"+y                    Yank to system clipboard
+"+p                    Paste from system clipboard
+:registers             View all registers
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SORTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+:sort                  Sort lines alphabetically
+:sort u                Sort and keep unique
+:sort!                 Sort in descending order
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+READING EXTERNAL FILES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+:read {path}           Read file into buffer
+:read !{command}       Read command output into buffer
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LINE NUMBERING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Command                Description
+───────────────────────────────────────────────────────────────────────────────
+:set number            Show line numbers
+:set relativenumber    Show relative line numbers
+:set nonumber          Hide line numbers
+
+================================================================================
+
+VS CODE CUSTOM KEYBINDINGS
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NAVIGATION BETWEEN PANELS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Key                    Command                            Context
+───────────────────────────────────────────────────────────────────────────────
+Ctrl+h                 Navigate left                       Always
+Ctrl+l                 Navigate right                      Always
+Ctrl+k                 Navigate up                         Always
+Ctrl+j                 Navigate down                       Always
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EDITOR MANAGEMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Key                    Command                            Context
+───────────────────────────────────────────────────────────────────────────────
+Space Space            Show all editors                   Normal mode
+Tab                    Next editor in group               Normal/Visual mode
+Shift+Tab              Previous editor in group           Normal/Visual mode
+Space s v              Split editor vertically            Normal/Visual mode
+Space s h              Split editor horizontally          Normal/Visual mode
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SIDEBAR & EXPLORER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Key                    Command                            Context
+───────────────────────────────────────────────────────────────────────────────
+\                     Toggle sidebar/focus explorer       Normal mode
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FILE EXPLORER ACTIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Key                    Command                            Context
+───────────────────────────────────────────────────────────────────────────────
+r                      Rename file/folder                 Explorer focus
+c                      Copy file/folder                   Explorer focus
+p                      Paste file/folder                  Explorer focus
+x                      Cut file/folder                    Explorer focus
+d                      Delete file/folder                 Explorer focus
+a                      Add new file                       Explorer focus
+s                      Open to side                       Explorer focus
+Shift+s                Split down and open                Explorer focus
+Enter                  Open file / toggle folder          Explorer focus
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CODING ACTIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Key                    Command                            Context
+───────────────────────────────────────────────────────────────────────────────
+Space c a              Code action                        Normal mode
+Space r n              Rename symbol                      Normal mode
+Alt+k                  Show hover                         Normal mode
+Shift+K                Move lines up                      Visual mode
+Shift+J                Move lines down                    Visual mode
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NAVIGATION & SEARCH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Key                    Command                            Context
+───────────────────────────────────────────────────────────────────────────────
+g g                    Cursor to top                      Normal mode
+g d                    Go to definition                   Normal mode
+g r                    Go to references                   Normal mode
+g i                    Go to implementation               Normal mode
+g s                    Go to symbol                       Normal mode
+g t                    Go to SCM (Git)                    Normal mode
+Space s f              Quick open (find file)             Not Insert mode
+Space s g              Find in files (grep)               Normal mode
+Space s p              Show commands                      Not Insert mode
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUICK PICKER NAVIGATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Key                    Command                            Context
+───────────────────────────────────────────────────────────────────────────────
+Tab                    Next item                          Quick input
+Shift+Tab              Previous item                      Quick input
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WINDOW RESIZING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Key                    Command                            Context
+───────────────────────────────────────────────────────────────────────────────
+Ctrl+Cmd+Left          Decrease view width                Normal mode
+Ctrl+Cmd+Right         Increase view width                Normal mode
+Ctrl+Cmd+Up            Increase view height               Normal mode
+Ctrl+Cmd+Down          Decrease view height               Normal mode
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TERMINAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Key                    Command                            Context
+───────────────────────────────────────────────────────────────────────────────
+Alt+m                  Toggle maximized panel             Terminal active
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FIND WIDGET
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Key                    Command                            Context
+───────────────────────────────────────────────────────────────────────────────
+Esc                    Close find widget                  Find widget visible
+
+================================================================================
+
+QUICK REFERENCE CARD
+
+ESSENTIAL MOVEMENTS
+───────────────────
+h j k l       ← ↓ ↑ →
+w b e         Word navigation
+{ }           Paragraph navigation
+gg G          Start/end of file
+$ 0 ^         End/start/first char of line
+f F t T ; ,   Find character on line
+
+
+ESSENTIAL OPERATORS
+───────────────────
+d             Delete
+y             Yank (copy)
+c             Change
+p P           Paste after/before
+u Ctrl+r      Undo/redo
+.             Repeat
+
+
+ESSENTIAL MODES
+───────────────
+i a I A o O   Insert mode variants
+v V Ctrl+v    Visual modes
+Esc           Normal mode
+:             Command mode
+
+
+TEXT OBJECTS
+────────────
+iw aw         Inner/around word
+i" a"         Inner/around quotes
+i( a(         Inner/around ()
+i{ a{         Inner/around {}
+it at         Inner/around tags
+
+================================================================================
+
+TIPS & TRICKS
+
+1. Combine operators with motions
+   Example: d3w (delete 3 words), y$ (yank to end of line)
+
+2. Use text objects
+   Example: ci" (change inside quotes), dat (delete around tags)
+
+3. Repeat with dot command
+   Make a change, then use . to repeat it elsewhere
+
+4. Visual block mode for columns
+   Select columns with Ctrl+v, then I to insert on all lines
+
+5. Macros for repetition
+   Record with qa, stop with q, replay with @a
+
+6. Marks for navigation
+   ma to mark, `a to return
+
+7. Relative numbering for easier counting
+   Use :set relativenumber for precise navigation
+
+================================================================================
+
+Total Commands: 200+
+
+Last Updated: November 23, 2025
+
+================================================================================
