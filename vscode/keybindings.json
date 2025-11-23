@@ -50,12 +50,12 @@
         "when": "vim.mode == 'Normal' && editorTextFocus && foldersViewVisible"
     },
     {
-        "key": "s v",
+        "key": "space s v",
         "command": "workbench.action.splitEditor",
         "when": "(vim.mode == 'Normal' || vim.mode == 'Visual') && (editorTextFocus || !inputFocus)"
     },
     {
-        "key": "s h",
+        "key": "space s h",
         "command": "workbench.action.splitEditorDown",
         "when": "(vim.mode == 'Normal' || vim.mode == 'Visual') && (editorTextFocus || !inputFocus)"
     },
@@ -83,17 +83,17 @@
     {
         "key": "shift-k",
         "command": "editor.action.moveLinesUpAction",
-        // "when": "vim.mode == 'VisualLine' && editorTextFocus"
-        "when": "vim.mode != 'Insert' && editorTextFocus"
+        "when": "(vim.mode == 'VisualLine' || vim.mode == 'Visual') && editorTextFocus"
+        // "when": "vim.mode != 'Insert' && editorTextFocus"
     },
     {
         "key": "shift-j",
         "command": "editor.action.moveLinesDownAction",
-        // "when": "vim.mode == 'VisualLine' && editorTextFocus"
-        "when": "vim.mode != 'Insert' && editorTextFocus"
+        "when": "(vim.mode == 'VisualLine' || vim.mode == 'Visual') && editorTextFocus"
+        // "when": "vim.mode != 'Insert' && editorTextFocus"
     },
     {
-        "key": "shift-k",
+        "key": "alt-k",
         "command": "editor.action.showHover",
         "when": "vim.mode == 'Normal' && editorTextFocus"
     },
@@ -129,17 +129,17 @@
         "when": "vim.mode == 'Normal' && editorTextFocus"
     },
     {
-        "key": "s g",
+        "key": "space s g",
         "command": "workbench.action.findInFiles",
         "when": "vim.mode == 'Normal' && (editorTextFocus || !inputFocus)"
     },
     {
-        "key": "s f",
+        "key": "space s f",
         "command": "workbench.action.quickOpen",
         "when": "vim.mode != 'Insert' && (editorTextFocus || !inputFocus)"
     },
     {
-        "key": "s p",
+        "key": "space s p",
         "command": "workbench.action.showCommands",
         "when": "vim.mode != 'Insert' && (editorTextFocus || !inputFocus)"
     },
@@ -257,5 +257,33 @@
         "key": "alt+m",
         "command": "workbench.action.toggleMaximizedPanel",
         "when": "terminal.active && vim.mode !='Insert'"
+    },
+    {
+        "key": "escape",
+        "command": "closeFindWidget",
+        "when": "editorFocus && findWidgetVisible"
+    },
+    {
+        "key": "alt+b",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text":"open \"$HOME/dotfiles/vscode/index.html\"\u000D"
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "key": "space b",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "code \"$HOME/dotfiles/vscode/complete_vim_vscode_reference.txt\"\u000D"
+        },
+        "when": "vim.mode == 'Normal' && editorTextFocus"
     }
+
 ]
