@@ -110,7 +110,7 @@
   "vim.useSystemClipboard": true,
   "editor.lineNumbers": "relative",
   "vscode_custom_css.imports": [
-    "file:///Users/herschelmenezes/dotfiles/vscode/custom-vscode.css"
+    "file://${env:HOME}/dotfiles/vscode/custom-vscode.css"
   ],
   "editor.fontFamily": "FiraCode Nerd Font",
   "terminal.integrated.fontLigatures.enabled": true,
