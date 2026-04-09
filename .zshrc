@@ -8,8 +8,8 @@ export PATH="/opt/homebrew/sbin:$PATH"
 
 
 #line for jenv
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
+# export PATH="$HOME/.jenv/bin:$PATH"
+# eval "$(jenv init -)"
 
 
 #line for OpenSSL
@@ -137,7 +137,8 @@ source <(fzf --zsh)
 export PATH="/opt/homebrew/opt/conan@1/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
-
+# For rust compiler
+source "$HOME/.cargo/env"
 
 # # alias nvim-kick="NVIM_APPNAME=kickstart nvim"
 # alias nvim-astro="NVIM_APPNAME=AstroNvim nvim"
@@ -174,21 +175,21 @@ export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 
 #Aliases for MongoDB
-alias start-mongod="brew services start mongodb/brew/mongodb-community"
-alias stop-mongod="brew services stop mongodb/brew/mongodb-community"
+# alias start-mongod="brew services start mongodb/brew/mongodb-community"
+# alias stop-mongod="brew services stop mongodb/brew/mongodb-community"
 
 #Aliases for Git
 #add here
 alias git-c="git commit -m"
 
 # Alias for Tomcat Server
-alias startup-tomcat="/Users/herschelmenezes/Applications/Tomcat/apache-tomcat-9.0.71/bin/startup.sh"
-alias shutdown-tomcat="/Users/herschelmenezes/Applications/Tomcat/apache-tomcat-9.0.71/bin/shutdown.sh"
+# alias startup-tomcat="/Users/herschelmenezes/Applications/Tomcat/apache-tomcat-9.0.71/bin/startup.sh"
+# alias shutdown-tomcat="/Users/herschelmenezes/Applications/Tomcat/apache-tomcat-9.0.71/bin/shutdown.sh"
 
 # Alias for Jenkins
-alias restart-jenkins="brew services restart jenkins-lts"
-alias start-jenkins="brew services start jenkins-lts"
-alias stop-jenkins="brew services stop jenkins-lts"
+# alias restart-jenkins="brew services restart jenkins-lts"
+# alias start-jenkins="brew services start jenkins-lts"
+# alias stop-jenkins="brew services stop jenkins-lts"
 
 
 
@@ -207,6 +208,10 @@ alias tat='tmux attach -t'
 alias tkall='tmux kill-session -a'
 alias tkt='tmux kill-session -t'
 
+alias cd-epm='cd /Users/herschel.menezes/Projects/EPM/epm-f1e'
+alias cd-epw='cd /Users/herschel.menezes/Projects/EPW/epw-f1e'
+alias cd-mv3='cd "/Users/herschel.menezes/Projects/epx-v3/epx-v3-browser-extensions"'
+
 alias powerdown="sudo pmset -a hibernatemode 25 && sudo pmset sleepnow"
 
 alias powerup="sudo pmset -a hibernatemode 3"
@@ -214,3 +219,83 @@ alias powerup="sudo pmset -a hibernatemode 3"
 alias deepsleep="sudo pmset -a hibernatemode 25 && sudo pmset -a standby 1 && sudo pmset -a standbydelayhigh 1 && sudo pmset -a standbydelaylow 1 && sudo pmset -a autopoweroff 1 && sudo pmset -a autopoweroffdelay 1 && echo 'Going to hibernate in 5 seconds...' && sleep 5 && sudo pmset sleepnow"
 
 alias wakeup="sudo pmset -a hibernatemode 3 standby 1 standbydelayhigh 86400 standbydelaylow 10800 autopoweroff 1 autopoweroffdelay 28800 && echo 'Sleep settings restored to normal'"
+export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+# bun completions
+[ -s "/Users/herschel.menezes/.bun/_bun" ] && source "/Users/herschel.menezes/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+alias claude-mem='/Users/herschel.menezes/.bun/bin/bun "/Users/herschel.menezes/.claude/plugins/cache/thedotmack/claude-mem/10.6.3/scripts/worker-service.cjs"'
+
+pr-comments() {
+  local pr_number=${1:-445}
+  local repo=${2:-epx-v3-browser-extensions}
+  GH_HOST=github.cicd.cloud.fpdev.io gh api repos/ENDPT/$repo/pulls/$pr_number/comments --jq '.[] | "\n━━ Reviewer: \(.user.login | ascii_upcase) | Line: \(.original_line // "General")\(if .in_reply_to_id then " [REPLY]" else "" end)\n📄 \(.path)\n💬 \(.body | gsub("\n"; "\n   "))\n"' | cat
+}
+
+
+# ═══════════════════════════════════════════════════════════════
+# JIRA CLI SETUP (go-jira)
+# ═══════════════════════════════════════════════════════════════
+# 1. Install: brew install go-jira
+# 2. Create ~/.jira/config.yml with:
+#    endpoint: https://forcepoint.atlassian.net
+#    user: herschel.menezes@forcepoint.com
+#    password: YOUR_API_TOKEN  (from https://id.atlassian.com/manage-profile/security/api-tokens)
+# 3. Set permissions: chmod 600 ~/.jira/config.yml
+# ═══════════════════════════════════════════════════════════════
+
+export JIRA_API_TOKEN="REDACTED_ATLASSIAN_TOKEN"
+
+jira-ticket() {
+	local ticket=${1}
+	local action=${2}
+
+	if [[ -z "$ticket" ]]; then
+		echo "Usage: jira-ticket UEP-92948 [comments|transitions]"
+		return 1
+	fi
+
+	# Check if go-jira is installed
+	if ! command -v jira &> /dev/null; then
+		echo "❌ go-jira not installed. Run: brew install go-jira"
+		return 1
+	fi
+
+	# Check if API token is set
+	if [[ -z "$JIRA_API_TOKEN" ]]; then
+		echo "❌ JIRA_API_TOKEN environment variable not set"
+		echo "   Add to ~/.zshrc: export JIRA_API_TOKEN=\"your_token_here\""
+		return 1
+	fi
+
+	# Export token for go-jira
+	export JIRA_API_TOKEN="$JIRA_API_TOKEN"
+
+	echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	echo "🎫  Ticket: $ticket"
+	echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+	# View ticket details
+	jira -e https://forcepoint.atlassian.net -u herschel.menezes@forcepoint.com view "$ticket"
+
+	# Show comments if requested
+	if [[ "$action" == "comments" ]]; then
+		echo ""
+		echo "💬 COMMENTS:"
+		echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+		jira -e https://forcepoint.atlassian.net -u herschel.menezes@forcepoint.com view "$ticket" | grep -A 100 "comments:" | head -50
+	fi
+
+	# Show available transitions if requested
+	if [[ "$action" == "transitions" ]]; then
+		echo ""
+		echo "🔄 AVAILABLE TRANSITIONS:"
+		echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+		jira -e https://forcepoint.atlassian.net -u herschel.menezes@forcepoint.com transitions "$ticket"
+	fi
+}
