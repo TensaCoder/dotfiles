@@ -253,49 +253,221 @@ export JIRA_API_TOKEN="REDACTED_ATLASSIAN_TOKEN"
 
 jira-ticket() {
 	local ticket=${1}
-	local action=${2}
 
 	if [[ -z "$ticket" ]]; then
-		echo "Usage: jira-ticket UEP-92948 [comments|transitions]"
+		echo "Usage: jira-ticket ISSUE-123"
 		return 1
 	fi
 
-	# Check if go-jira is installed
 	if ! command -v jira &> /dev/null; then
-		echo "❌ go-jira not installed. Run: brew install go-jira"
+		echo "❌ go-jira not installed"
 		return 1
 	fi
 
-	# Check if API token is set
 	if [[ -z "$JIRA_API_TOKEN" ]]; then
-		echo "❌ JIRA_API_TOKEN environment variable not set"
-		echo "   Add to ~/.zshrc: export JIRA_API_TOKEN=\"your_token_here\""
+		echo "❌ JIRA_API_TOKEN not set"
 		return 1
 	fi
 
-	# Export token for go-jira
-	export JIRA_API_TOKEN="$JIRA_API_TOKEN"
+	local endpoint="https://forcepoint.atlassian.net"
+	local user="herschel.menezes@forcepoint.com"
+	local json_file
+	json_file=$(mktemp)
 
-	echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-	echo "🎫  Ticket: $ticket"
-	echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-
-	# View ticket details
-	jira -e https://forcepoint.atlassian.net -u herschel.menezes@forcepoint.com view "$ticket"
-
-	# Show comments if requested
-	if [[ "$action" == "comments" ]]; then
-		echo ""
-		echo "💬 COMMENTS:"
-		echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-		jira -e https://forcepoint.atlassian.net -u herschel.menezes@forcepoint.com view "$ticket" | grep -A 100 "comments:" | head -50
+	# Fetch JSON
+	if ! jira -e "$endpoint" -u "$user" view "$ticket" -t debug > "$json_file" 2>&1; then
+		rm -f "$json_file"
+		echo "❌ Failed to fetch: $ticket"
+		return 1
 	fi
 
-	# Show available transitions if requested
-	if [[ "$action" == "transitions" ]]; then
-		echo ""
-		echo "🔄 AVAILABLE TRANSITIONS:"
-		echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-		jira -e https://forcepoint.atlassian.net -u herschel.menezes@forcepoint.com transitions "$ticket"
+	# Validate JSON
+	if ! jq empty "$json_file" 2>/dev/null; then
+		rm -f "$json_file"
+		echo "❌ Invalid JSON from Jira"
+		return 1
 	fi
+
+	# Generate markdown via Python reading the JSON file directly
+	python3 - "$json_file" << 'SCRIPT'
+import sys, json
+
+with open(sys.argv[1]) as f:
+	raw = json.load(f)
+
+fields = raw.get('fields', {})
+key = raw.get('key', '?')
+
+def fmt_date(s):
+	return s.split('T')[0] if s else '(not set)'
+
+def get_names(items, field='name'):
+	if not items: return '(none)'
+	if isinstance(items, list): return ', '.join([i.get(field, i) if isinstance(i, dict) else str(i) for i in items])
+	return '(none)'
+
+# Header
+print(f"# 🎫 {key} | {fields.get('issuetype', {}).get('name', '?')} | {fields.get('priority', {}).get('name', '?')}\n")
+print(f"> **Status:** {fields.get('status', {}).get('name', '?')}\n")
+print(f"> **Link:** https://forcepoint.atlassian.net/browse/{key}\n")
+
+# Summary
+print(f"## Summary\n\n{fields.get('summary', 'N/A')}\n")
+
+# Metadata
+print("## Metadata\n")
+print("| Field | Value |")
+print("|-------|-------|")
+
+assignee = fields.get('assignee') or {}
+reporter = fields.get('reporter') or {}
+
+print(f"| **Assignee** | {assignee.get('displayName', 'Unassigned')} ({assignee.get('emailAddress', 'N/A')}) |")
+print(f"| **Reporter** | {reporter.get('displayName', 'N/A')} ({reporter.get('emailAddress', 'N/A')}) |")
+print(f"| **Component** | {get_names(fields.get('components', []))} |")
+labels = ', '.join(fields.get('labels', [])) if fields.get('labels') else '(none)'
+print(f"| **Labels** | {labels} |")
+print(f"| **Created** | {fmt_date(fields.get('created', ''))} |")
+print(f"| **Updated** | {fmt_date(fields.get('updated', ''))} |")
+print(f"| **Due Date** | {fmt_date(fields.get('duedate', ''))} |")
+print(f"| **Fix Version** | {get_names(fields.get('fixVersions', []))} |")
+print(f"| **Affected Version** | {get_names(fields.get('versions', []))} |")
+resolution = fields.get('resolution') or {}
+print(f"| **Resolution** | {resolution.get('name', 'Unresolved')} |")
+print()
+
+# Description
+if fields.get('description'):
+	print(f"## Description\n\n{fields['description']}\n")
+
+# Attachments
+if fields.get('attachment'):
+	print("## Attachments\n")
+	for att in fields['attachment']:
+		print(f"- **{att.get('filename', '?')}** ({att.get('size', 0) // 1024} KB) — {att.get('author', {}).get('displayName', '?')} on {fmt_date(att.get('created', ''))}")
+	print()
+
+# Linked Issues
+if fields.get('issuelinks'):
+	print("## Linked Issues\n")
+	for link in fields['issuelinks']:
+		issue = link.get('inwardIssue') or link.get('outwardIssue') or {}
+		print(f"- {link.get('type', {}).get('name', '?')}: {issue.get('key', '?')} — {issue.get('fields', {}).get('summary', '?')}")
+	print()
+else:
+	print("## Linked Issues\n\n(none)\n")
+
+# Subtasks
+if fields.get('subtasks'):
+	print("## Subtasks\n")
+	for sub in fields['subtasks']:
+		print(f"- {sub.get('key', '?')} — {sub.get('fields', {}).get('summary', '?')} ({sub.get('fields', {}).get('status', {}).get('name', '?')})")
+	print()
+
+# Comments
+comments = fields.get('comment', {}).get('comments', [])
+if comments:
+	print(f"## Comments ({len(comments)})\n")
+	for cmt in comments:
+		print(f"### {cmt.get('author', {}).get('displayName', '?')} — {fmt_date(cmt.get('created', ''))}\n")
+		print(f"{cmt.get('body', '')}\n")
+else:
+	print("## Comments\n\n(none)\n")
+SCRIPT
+
+	# Transitions
+	local transitions
+	transitions=$(jira -e "$endpoint" -u "$user" transitions "$ticket" 2>&1)
+
+	echo ""
+	echo "## Available Transitions"
+	echo ""
+	echo "$transitions" | grep -v "^usage:" | grep -v "^jira" || echo "(none)"
+
+	# Save to file
+	# echo ""
+	# echo "---"
+	# echo "_Saved to: /tmp/${ticket}.md_"
+
+	# # Regenerate for file save
+	# python3 - "$json_file" << 'SCRIPT' > "/tmp/${ticket}.md"
+	# import sys, json
+	#
+	# with open(sys.argv[1]) as f:
+	# 	raw = json.load(f)
+	#
+	# fields = raw.get('fields', {})
+	# key = raw.get('key', '?')
+	#
+	# def fmt_date(s):
+	# 	return s.split('T')[0] if s else '(not set)'
+	#
+	# def get_names(items, field='name'):
+	# 	if not items: return '(none)'
+	# 	if isinstance(items, list): return ', '.join([i.get(field, i) if isinstance(i, dict) else str(i) for i in items])
+	# 	return '(none)'
+	#
+	# print(f"# 🎫 {key} | {fields.get('issuetype', {}).get('name', '?')} | {fields.get('priority', {}).get('name', '?')}\n")
+	# print(f"> **Status:** {fields.get('status', {}).get('name', '?')}\n")
+	# print(f"> **Link:** https://forcepoint.atlassian.net/browse/{key}\n")
+	#
+	# print(f"## Summary\n\n{fields.get('summary', 'N/A')}\n")
+	#
+	# print("## Metadata\n")
+	# print("| Field | Value |")
+	# print("|-------|-------|")
+	#
+	# assignee = fields.get('assignee') or {}
+	# reporter = fields.get('reporter') or {}
+	#
+	# print(f"| **Assignee** | {assignee.get('displayName', 'Unassigned')} ({assignee.get('emailAddress', 'N/A')}) |")
+	# print(f"| **Reporter** | {reporter.get('displayName', 'N/A')} ({reporter.get('emailAddress', 'N/A')}) |")
+	# print(f"| **Component** | {get_names(fields.get('components', []))} |")
+	# labels = ', '.join(fields.get('labels', [])) if fields.get('labels') else '(none)'
+	# print(f"| **Labels** | {labels} |")
+	# print(f"| **Created** | {fmt_date(fields.get('created', ''))} |")
+	# print(f"| **Updated** | {fmt_date(fields.get('updated', ''))} |")
+	# print(f"| **Due Date** | {fmt_date(fields.get('duedate', ''))} |")
+	# print(f"| **Fix Version** | {get_names(fields.get('fixVersions', []))} |")
+	# print(f"| **Affected Version** | {get_names(fields.get('versions', []))} |")
+	# resolution = fields.get('resolution') or {}
+	# print(f"| **Resolution** | {resolution.get('name', 'Unresolved')} |")
+	# print()
+	#
+	# if fields.get('description'):
+	# 	print(f"## Description\n\n{fields['description']}\n")
+	#
+	# if fields.get('attachment'):
+	# 	print("## Attachments\n")
+	# 	for att in fields['attachment']:
+	# 		print(f"- **{att.get('filename', '?')}** ({att.get('size', 0) // 1024} KB) — {att.get('author', {}).get('displayName', '?')} on {fmt_date(att.get('created', ''))}")
+	# 	print()
+	#
+	# if fields.get('issuelinks'):
+	# 	print("## Linked Issues\n")
+	# 	for link in fields['issuelinks']:
+	# 		issue = link.get('inwardIssue') or link.get('outwardIssue') or {}
+	# 		print(f"- {link.get('type', {}).get('name', '?')}: {issue.get('key', '?')} — {issue.get('fields', {}).get('summary', '?')}")
+	# 	print()
+	# else:
+	# 	print("## Linked Issues\n\n(none)\n")
+	#
+	# if fields.get('subtasks'):
+	# 	print("## Subtasks\n")
+	# 	for sub in fields['subtasks']:
+	# 		print(f"- {sub.get('key', '?')} — {sub.get('fields', {}).get('summary', '?')} ({sub.get('fields', {}).get('status', {}).get('name', '?')})")
+	# 	print()
+	#
+	# comments = fields.get('comment', {}).get('comments', [])
+	# if comments:
+	# 	print(f"## Comments ({len(comments)})\n")
+	# 	for cmt in comments:
+	# 		print(f"### {cmt.get('author', {}).get('displayName', '?')} — {fmt_date(cmt.get('created', ''))}\n")
+	# 		print(f"{cmt.get('body', '')}\n")
+	# else:
+	# 	print("## Comments\n\n(none)\n")
+	# SCRIPT
+
+	# Clean up temp file
+	rm -f "$json_file"
 }

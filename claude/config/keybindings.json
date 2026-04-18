@@ -1,0 +1,17 @@
+{
+    "$schema": "https://www.schemastore.org/claude-code-keybindings.json",
+    "$docs": "https://code.claude.com/docs/en/keybindings",
+    "bindings": [
+        {
+            "context": "Chat",
+            "bindings": {
+                "meta+p": null,
+                "meta+t": null,
+                "ctrl+x ctrl+p": "chat:modelPicker",
+                "ctrl+x ctrl+t": "chat:thinkingToggle",
+                "ctrl+x ctrl+e": "chat:externalEditor",
+                "shift+enter": "chat:newline"
+            }
+        }
+    ]
+}

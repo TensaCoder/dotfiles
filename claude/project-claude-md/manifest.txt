@@ -1,0 +1,2 @@
+Projects__Dev-Clarity-Training__devclarity-coding-tutorial__CLAUDE.md|/Users/herschel.menezes/Projects/Dev-Clarity-Training/devclarity-coding-tutorial/CLAUDE.md
+Projects__epx-v3__epx-v3-browser-extensions__CLAUDE.md|/Users/herschel.menezes/Projects/epx-v3/epx-v3-browser-extensions/CLAUDE.md

@@ -12,6 +12,12 @@
   border: none !important;
 }
 
+/* Top right elements */
+/* Hide editor actions toolbar (More Actions dropdown) */
+/* .actions-container {
+  display: none !important;
+} */
+
 /* Command Palette */
 .quick-input-widget {
   transform: translateY(-50%) !important;

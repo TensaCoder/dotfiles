@@ -1,0 +1,115 @@
+{
+  "version": 2,
+  "plugins": {
+    "clangd-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/herschel.menezes/.claude/plugins/cache/claude-plugins-official/clangd-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-03-26T05:17:08.905Z",
+        "lastUpdated": "2026-03-26T05:17:08.905Z",
+        "gitCommitSha": "b10b583de281385442474e836644534b938b2678"
+      }
+    ],
+    "superpowers@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/herschel.menezes/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.7",
+        "version": "5.0.7",
+        "installedAt": "2026-03-28T05:55:59.594Z",
+        "lastUpdated": "2026-04-01T05:33:22.038Z",
+        "gitCommitSha": "eafe962b18f6c5dc70fb7c8cc7e83e61f4cdde06"
+      }
+    ],
+    "claude-mem@thedotmack": [
+      {
+        "scope": "user",
+        "installPath": "/Users/herschel.menezes/.claude/plugins/cache/thedotmack/claude-mem/10.6.3",
+        "version": "10.6.3",
+        "installedAt": "2026-03-29T06:10:44.941Z",
+        "lastUpdated": "2026-03-29T06:10:44.941Z",
+        "gitCommitSha": "d06882126fe24f6ebcbe433385daeb8322ba8009"
+      }
+    ],
+    "explanatory-output-style@claude-code-plugins": [
+      {
+        "scope": "user",
+        "installPath": "/Users/herschel.menezes/.claude/plugins/cache/claude-code-plugins/explanatory-output-style/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-03-29T06:19:41.788Z",
+        "lastUpdated": "2026-03-29T06:19:41.788Z",
+        "gitCommitSha": "2923bc87d10da4fda57570313f2abbc5b457fed1"
+      }
+    ],
+    "code-review@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/herschel.menezes/.claude/plugins/cache/claude-plugins-official/code-review/unknown",
+        "version": "unknown",
+        "installedAt": "2026-03-29T06:20:09.270Z",
+        "lastUpdated": "2026-04-10T13:29:27.182Z",
+        "gitCommitSha": "548bfa83750f4191adcb46ffa51b44f02e1ceaa7"
+      }
+    ],
+    "github@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/herschel.menezes/.claude/plugins/cache/claude-plugins-official/github/unknown",
+        "version": "unknown",
+        "installedAt": "2026-03-29T06:21:06.179Z",
+        "lastUpdated": "2026-04-10T13:29:27.184Z",
+        "gitCommitSha": "548bfa83750f4191adcb46ffa51b44f02e1ceaa7"
+      }
+    ],
+    "feature-dev@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/herschel.menezes/.claude/plugins/cache/claude-plugins-official/feature-dev/unknown",
+        "version": "unknown",
+        "installedAt": "2026-03-29T06:21:23.398Z",
+        "lastUpdated": "2026-04-10T13:29:27.185Z",
+        "gitCommitSha": "548bfa83750f4191adcb46ffa51b44f02e1ceaa7"
+      }
+    ],
+    "ralph-loop@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/herschel.menezes/.claude/plugins/cache/claude-plugins-official/ralph-loop/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-03-29T06:21:42.136Z",
+        "lastUpdated": "2026-03-29T14:48:50.872Z",
+        "gitCommitSha": "548bfa83750f4191adcb46ffa51b44f02e1ceaa7"
+      }
+    ],
+    "claude-md-management@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/herschel.menezes/.claude/plugins/cache/claude-plugins-official/claude-md-management/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-03-29T06:22:03.677Z",
+        "lastUpdated": "2026-03-29T06:22:03.677Z",
+        "gitCommitSha": "548bfa83750f4191adcb46ffa51b44f02e1ceaa7"
+      }
+    ],
+    "security-guidance@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/herschel.menezes/.claude/plugins/cache/claude-plugins-official/security-guidance/unknown",
+        "version": "unknown",
+        "installedAt": "2026-03-29T06:22:25.805Z",
+        "lastUpdated": "2026-04-10T13:29:27.184Z",
+        "gitCommitSha": "548bfa83750f4191adcb46ffa51b44f02e1ceaa7"
+      }
+    ],
+    "obsidian@obsidian-skills": [
+      {
+        "scope": "user",
+        "installPath": "/Users/herschel.menezes/.claude/plugins/cache/obsidian-skills/obsidian/1.0.1",
+        "version": "1.0.1",
+        "installedAt": "2026-03-29T06:30:07.761Z",
+        "lastUpdated": "2026-03-29T06:30:07.761Z",
+        "gitCommitSha": "bb9ec95e1b59c3471bd6fd77a78a4042430bfac3"
+      }
+    ]
+  }
+}
