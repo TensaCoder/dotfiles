@@ -89,10 +89,10 @@
   "outputStyle": "Explanatory",
   "spinnerTipsEnabled": false,
   "effortLevel": "low",
-  "autoUpdatesChannel": "stable",
-  "voiceEnabled": true,
+  "autoUpdatesChannel": "latest",
   "autoDreamEnabled": false,
   "skipAutoPermissionPrompt": true,
   "autoMode": {},
+  "voiceEnabled": true,
   "showTurnDuration": true
 }

@@ -85,10 +85,18 @@ if [[ -L "$SKILLS_SRC" ]]; then
 elif [[ -d "$SKILLS_SRC" ]]; then
     info "Migrating skills/ → dotfiles"
     # Copy contents into dotfiles/skills (merge, not overwrite)
-    cp -Rn "$SKILLS_SRC/." "$SKILLS_DEST/" 2>/dev/null || true
-    rm -rf "$SKILLS_SRC"
-    ln -s "$SKILLS_DEST" "$SKILLS_SRC"
-    ok "Migrated and symlinked skills/"
+    if cp -Rn "$SKILLS_SRC/." "$SKILLS_DEST/" 2>/dev/null; then
+        rm -rf "$SKILLS_SRC"
+        ln -s "$SKILLS_DEST" "$SKILLS_SRC"
+        ok "Migrated and symlinked skills/"
+    else
+        echo ""
+        echo "ERROR: Failed to copy skills to dotfiles. Aborting to preserve source."
+        echo "  Source: $SKILLS_SRC"
+        echo "  Dest:   $SKILLS_DEST"
+        echo "  Check permissions and disk space, then re-run."
+        exit 1
+    fi
 else
     mkdir -p "$SKILLS_DEST"
     ln -s "$SKILLS_DEST" "$SKILLS_SRC"
@@ -105,10 +113,18 @@ if [[ -L "$COMMANDS_SRC" ]]; then
     skipped "commands/ (already symlinked)"
 elif [[ -d "$COMMANDS_SRC" ]]; then
     info "Migrating commands/ → dotfiles"
-    cp -Rn "$COMMANDS_SRC/." "$COMMANDS_DEST/" 2>/dev/null || true
-    rm -rf "$COMMANDS_SRC"
-    ln -s "$COMMANDS_DEST" "$COMMANDS_SRC"
-    ok "Migrated and symlinked commands/"
+    if cp -Rn "$COMMANDS_SRC/." "$COMMANDS_DEST/" 2>/dev/null; then
+        rm -rf "$COMMANDS_SRC"
+        ln -s "$COMMANDS_DEST" "$COMMANDS_SRC"
+        ok "Migrated and symlinked commands/"
+    else
+        echo ""
+        echo "ERROR: Failed to copy commands to dotfiles. Aborting to preserve source."
+        echo "  Source: $COMMANDS_SRC"
+        echo "  Dest:   $COMMANDS_DEST"
+        echo "  Check permissions and disk space, then re-run."
+        exit 1
+    fi
 else
     mkdir -p "$COMMANDS_DEST"
     ln -s "$COMMANDS_DEST" "$COMMANDS_SRC"

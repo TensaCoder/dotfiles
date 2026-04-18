@@ -25,6 +25,13 @@ echo ""
 echo "=== Claude Memory & Project Config Backup ==="
 echo ""
 
+# Check for required dependencies
+if ! command -v rsync &>/dev/null; then
+    err "'rsync' not found in PATH."
+    echo "    Install rsync (e.g., 'brew install rsync'), then re-run this script."
+    exit 1
+fi
+
 # ── claude-mem project memory → Obsidian vault ───────────────────────────────
 echo "▸ Backing up claude-mem memory to Obsidian"
 
@@ -68,9 +75,12 @@ for proj_dir in "$CLAUDE_HOME/projects"/*/; do
     mkdir -p "$obsidian_subdir"
 
     info "Syncing memory: $label ($file_count files)"
-    rsync -a --delete "$proj_dir/memory/" "$obsidian_subdir/"
-    ok "Synced → $obsidian_subdir"
-    (( MEMORY_BACKED_UP++ )) || true
+    if rsync -a --delete "$proj_dir/memory/" "$obsidian_subdir/"; then
+        ok "Synced → $obsidian_subdir"
+        (( MEMORY_BACKED_UP++ )) || true
+    else
+        warn "rsync failed for $label — check disk space and permissions"
+    fi
 done
 
 if [[ "$MEMORY_BACKED_UP" -eq 0 ]]; then
@@ -81,7 +91,9 @@ fi
 echo ""
 echo "▸ Backing up claude-mem observer sessions (session history DB)"
 
-OBSERVER_SRC="$CLAUDE_HOME/projects/-Users-herschel-menezes--claude-mem-observer-sessions"
+# Build observer sessions path dynamically using current username (convert dots to hyphens)
+USERNAME_ENCODED=$(whoami | tr '.' '-')
+OBSERVER_SRC="$CLAUDE_HOME/projects/-Users-$USERNAME_ENCODED--claude-mem-observer-sessions"
 OBSERVER_DEST="$OBSIDIAN_MEM/_observer-sessions"
 
 if [[ -d "$OBSERVER_SRC" ]]; then
@@ -89,8 +101,11 @@ if [[ -d "$OBSERVER_SRC" ]]; then
     size=$(du -sh "$OBSERVER_SRC" | cut -f1)
     info "Syncing observer sessions ($file_count files, $size)"
     mkdir -p "$OBSERVER_DEST"
-    rsync -a --delete "$OBSERVER_SRC/" "$OBSERVER_DEST/"
-    ok "Synced observer sessions → $OBSERVER_DEST"
+    if rsync -a --delete "$OBSERVER_SRC/" "$OBSERVER_DEST/"; then
+        ok "Synced observer sessions → $OBSERVER_DEST"
+    else
+        warn "rsync failed for observer sessions — check disk space and permissions"
+    fi
 else
     skipped "No claude-mem observer sessions found"
 fi
@@ -110,10 +125,13 @@ while IFS= read -r -d $'\0' claude_path; do
     rel="${claude_path#$HOME/}"
     safe_name="${rel//\//__}"
 
-    cp "$claude_path" "$PROJECT_CLAUDE_DEST/$safe_name"
-    echo "$safe_name|$claude_path" >> "$MANIFEST"
-    info "Saved: $rel"
-    (( CLAUDE_MD_COUNT++ )) || true
+    if cp "$claude_path" "$PROJECT_CLAUDE_DEST/$safe_name"; then
+        echo "$safe_name|$claude_path" >> "$MANIFEST"
+        info "Saved: $rel"
+        (( CLAUDE_MD_COUNT++ )) || true
+    else
+        warn "Failed to copy: $rel (check permissions)"
+    fi
 done < <(find "$HOME/Projects" \
     -maxdepth 4 \
     -name "CLAUDE.md" \

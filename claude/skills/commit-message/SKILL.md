@@ -1,6 +1,6 @@
 ---
-name: git-commit
-description: Generate a professional commit message from staged C/C++ or extension changes without type/scope prefix. Use when user says "generate commit message", "write a commit", "commit my changes", or asks about commit message format.
+name: commit-message
+description: Generate a professional commit message from staged C/C++ or extension changes without type/scope prefix. Use when user says "generate commit message", "write a commit message", "suggest a commit message", or asks about commit message format. Outputs title and description only — does NOT run git commit.
 allowed-tools: ["Bash", "Read"]
 arguments:
   - name: type

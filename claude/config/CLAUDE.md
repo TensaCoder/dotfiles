@@ -13,6 +13,25 @@ platform behaviour, or which approach is correct — stop and ask a clarifying
 question before proceeding. One focused question is better than a wrong
 implementation.
 
+### Perform Dry-Run & Static Analysis Before Implementation
+Before writing, modifying, or deploying code that performs system changes 
+(file migrations, symlinks, batch operations, data restoration):
+
+1. **Static analysis**: Trace through code logic for edge cases, failure modes, 
+   and assumptions that could silently fail.
+2. **Dry-run scenarios**: Mentally execute the code against:
+   - Happy path (normal case with expected state)
+   - Fresh state (new machine, empty directories, no prior setup)
+   - Dirty state (re-running script, partial previous state, conflicts)
+   - Failure modes (permissions denied, disk full, missing dependencies, network issues)
+3. **Document findings**: Report critical issues (data loss risks, silent failures), 
+   medium-priority edge cases, and test cases for verification.
+4. **Get clarity**: If analysis reveals ambiguity or missing information, stop and 
+   ask the user before proceeding.
+
+This prevents silent failures, data loss, and cascading bugs in shell scripts and 
+system-level operations.
+
 ### Proactively Update CLAUDE.md
 If during any session Claude discovers something useful not already captured
 here — a new pattern, a platform quirk, an architectural decision, a build
@@ -165,6 +184,40 @@ System stability or data integrity threatened?   → Critical
 
 ---
 
+## Graphify Code Analysis Protocol
+
+Before reading any source file for any code task, check whether a graphify knowledge graph exists for the current repository in the Obsidian vault:
+
+**Vault path**: `/Users/herschel.menezes/Library/CloudStorage/OneDrive-Forcepoint,LLC/Obsidian/Work/Graphify/<repo-name>/`
+
+Where `<repo-name>` is the basename of the current working directory (e.g. `epx-network-proxy`).
+
+### Decision
+
+- **Graph exists** (`GRAPH_REPORT.md` present at that path): use it — do NOT read raw source files until the graph has been consulted
+- **Graph absent**: fall back to normal file search and reading
+
+### When graph exists — required steps before reading any source file
+
+1. Read `<vault>/GRAPH_REPORT.md` — identifies god nodes (highest-degree files/functions) and community structure (logical subsystems)
+2. If `<vault>/graphify-out/wiki/index.md` exists, look up the relevant component there — each wiki article covers one community at ~200 tokens vs reading full source files
+3. Use the graph to identify *which specific files* are involved, then read only those
+
+### Applies to
+
+Tracing a function, understanding a call chain, locating a symbol, debugging, implementing a feature, understanding component interactions — every code task.
+
+### Never
+
+- Read files at random to "explore" when a graph is available
+- Read a file to find where a symbol is defined — check the graph first
+
+### Maintenance
+
+After modifying code files in any session, run `graphify . --update` to keep the graph current (AST-only, no API cost). Then run `/graphify-update` to sync to the vault.
+
+---
+
 ## Code Review Workflow
 
 - **Never post to GitHub directly.** After completing a code review, present the formatted issue list to the user in the terminal. The user will manually add review comments to the PR.
@@ -177,3 +230,6 @@ System stability or data integrity threatened?   → Critical
 <!-- Maintained by /codebase-onboarding -->
 <!-- Run /codebase-onboarding to populate or refresh this section -->
 <!-- Summary only — full details in CODEBASE.md -->
+# graphify
+- **graphify** (`~/.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
+When the user types `/graphify`, invoke the Skill tool with `skill: "graphify"` before doing anything else.

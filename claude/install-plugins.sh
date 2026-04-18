@@ -30,6 +30,12 @@ if ! command -v claude &>/dev/null; then
     exit 1
 fi
 
+if ! command -v python3 &>/dev/null; then
+    err "'python3' not found in PATH."
+    echo "    Install Python 3, add it to PATH, then re-run this script."
+    exit 1
+fi
+
 # ── Marketplaces ──────────────────────────────────────────────────────────────
 # claude-plugins-official is built-in; the others need to be added.
 echo "▸ Adding custom marketplaces"
@@ -42,7 +48,8 @@ declare -A MARKETPLACES=(
 
 for name in "${!MARKETPLACES[@]}"; do
     repo="${MARKETPLACES[$name]}"
-    if claude plugin marketplace list 2>/dev/null | grep -q "$name"; then
+    # Use grep with word boundary to avoid substring matches
+    if claude plugin marketplace list 2>/dev/null | grep -qw "$name"; then
         ok "$name (already added)"
     else
         info "Adding marketplace: $name ($repo)"
@@ -68,11 +75,18 @@ fi
 # Keys are like "superpowers@claude-plugins-official"
 PLUGIN_KEYS=$(python3 -c "
 import json, sys
-with open('$PLUGINS_JSON') as f:
-    data = json.load(f)
-for key in data.get('plugins', {}):
-    print(key)
-")
+try:
+    with open('$PLUGINS_JSON') as f:
+        data = json.load(f)
+    for key in data.get('plugins', {}):
+        print(key)
+except json.JSONDecodeError as e:
+    print(f'ERROR: Invalid JSON in $PLUGINS_JSON: {e}', file=sys.stderr)
+    sys.exit(1)
+except FileNotFoundError:
+    print(f'ERROR: File not found: $PLUGINS_JSON', file=sys.stderr)
+    sys.exit(1)
+") || { err "Failed to parse plugin list"; exit 1; }
 
 while IFS= read -r plugin_key; do
     [[ -z "$plugin_key" ]] && continue
