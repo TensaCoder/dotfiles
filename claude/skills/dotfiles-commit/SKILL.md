@@ -69,12 +69,27 @@ git diff --cached
 
 ### Step 4: Generate Commit Message
 
-Run the commit-message skill:
-```
-Invoke the commit-message skill with the staged changes context
+Use the **commit-message** skill to generate professional commit title and description:
+
+```bash
+# View staged changes for reference
+git diff --staged
+git diff --staged --name-only
 ```
 
-The skill generates professional message from your changes. Review for accuracy.
+Then invoke:
+```
+/commit-message
+```
+
+The skill will:
+1. Analyze staged changes
+2. Infer commit type (feat, fix, chore, refactor)
+3. Infer scope from file paths
+4. Generate professional title (imperative mood, max 72 chars)
+5. Generate description with bullet points
+
+**Review the generated message** for accuracy before proceeding to Step 5.
 
 ### Step 5: Create Commit
 ```bash
