@@ -49,6 +49,51 @@ Before responding to any prompt — including clarifying questions — Claude mu
 This applies to all task types: feature development, debugging, code review,
 architecture, memory lookups, git operations, and scheduling.
 
+### Response Overview for Medium/Long Responses
+For research tasks, root-cause (RC) investigations, and plan files, open
+with a short **Overview** section before any detail — whenever the
+response is medium or long (multiple findings, multiple steps, multiple
+sections worth scanning), not gated on a fixed word count. Judge by
+structure/complexity, not length in characters.
+
+3 to 6 bullets, plain simple words, no jargon, each scannable in a few
+seconds. The reader must be able to tell from the Overview alone whether
+the full response has what they need, before reading further.
+
+Each bullet should be one of:
+- **Finding** — what was discovered
+- **Root cause** — why it happened (for RC tasks)
+- **Recommendation** — what to do about it
+- **Risk / blocker** — anything that could derail the plan
+- **Next step** — what happens after this response
+
+Skip this section for short, single-point answers, direct code edits, or
+quick lookups — the requirement exists to save reading time on
+substantial output, not to add ceremony to everything.
+
+### Subagent Model Selection
+When spawning a subagent (Agent tool `model` param, or Workflow
+`agent()` `opts.model`), default to `sonnet` for almost everything. Only
+step down or up from that default in these two specific cases:
+
+| Task shape | Model |
+|---|---|
+| Read-only locate/search, grep/glob lookups, mechanical single-pattern checks, one-line review comments | `haiku` |
+| Everything else — implementation, multi-file edits, reasoning, architecture, verification | `sonnet` (default) |
+| Anything | `opus` — **only when the user explicitly names/requests opus** for the task, never as an automatic escalation for perceived complexity |
+
+Prefer existing purpose-built cheap agents over spawning a generic one for
+the same job — e.g. `cavecrew-investigator` / `cavecrew-reviewer` are
+already pinned to `haiku` for exactly this class of work.
+
+**Never drop to `haiku` for:** security review, kernel/driver code,
+memory-safety audits, or any final correctness/verification pass — these
+stay at `sonnet` minimum regardless of cost pressure.
+
+If no `model:` field exists on a custom agent definition and no call-time
+override is passed, it inherits the parent session's model — this is a
+safe default, not an error to fix.
+
 ---
 
 ## Language & Platform Targets
