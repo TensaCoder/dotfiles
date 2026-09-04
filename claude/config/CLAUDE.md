@@ -192,16 +192,64 @@ Before reading any source file for any code task, check whether a graphify knowl
 
 Where `<repo-name>` is the basename of the current working directory (e.g. `epx-network-proxy`).
 
+### Global graphify-out Rule (applies to ALL repos)
+
+`graphify-out` always lives inside the vault subdirectory — never inside the codebase. The user always remains in the codebase directory. For every graphify operation (full run, `--update`, or read):
+
+1. `cd` to the correct vault subdirectory for the repo
+2. Run the graphify command there (`graphify-out` is created/updated in-place)
+3. `cd` back to the codebase when done
+
+If `graphify-out` is **absent** from the vault subdirectory, proceed with the task using normal file search and reading — do not run graphify or prompt the user about it.
+
+### SEP Repo Special Case
+
+The `SEP` repository shares a single codebase with Windows and macOS code on separate branches. It has two separate graphify knowledge graphs stored directly in the Obsidian vault — there is no persistent local `graphify-out` for SEP.
+
+**Before any graphify operation in SEP, always ask:**
+
+> "Is this a **Windows** or **macOS** codebase question?"
+
+Then use the corresponding vault path as both the read source and write target:
+
+- **Windows** → `SEP-Win/` → `…/Graphify/SEP-Win/`
+- **macOS** → `SEP-Mac/` → `…/Graphify/SEP-Mac/`
+
+**Rules:**
+- The `graphify-out` directory lives permanently inside the vault subdirectory — it already exists there and is never created inside the SEP codebase
+- The user always stays in the SEP codebase. Claude must:
+  1. `cd` to the correct vault subdirectory before any graphify operation
+  2. Run the graphify command there (graphify-out is updated in-place)
+  3. `cd` back to the SEP codebase after the operation completes
+- All reads (GRAPH_REPORT.md, graph.json, wiki) are done from the vault subdirectory
+- Never create or leave a `graphify-out` folder inside the SEP codebase
+- Never assume the platform — always ask first
+
 ### Decision
 
-- **Graph exists** (`GRAPH_REPORT.md` present at that path): use it — do NOT read raw source files until the graph has been consulted
-- **Graph absent**: fall back to normal file search and reading
+- **`graphify-out` exists** in the vault subdirectory: `cd` there, use it — do NOT read raw source files until the graph has been consulted
+- **`graphify-out` absent**: fall back to normal file search and reading — do not run graphify
 
 ### When graph exists — required steps before reading any source file
 
 1. Read `<vault>/GRAPH_REPORT.md` — identifies god nodes (highest-degree files/functions) and community structure (logical subsystems)
 2. If `<vault>/graphify-out/wiki/index.md` exists, look up the relevant component there — each wiki article covers one community at ~200 tokens vs reading full source files
 3. Use the graph to identify *which specific files* are involved, then read only those
+
+### Confidence Score Weighting — How Much to Trust the Graph
+
+Every edge in the graph has a `confidence_score` and a tag (`EXTRACTED`, `INFERRED`, `AMBIGUOUS`). These scores determine how much weight to give the graph result vs. manual code reading:
+
+| Score | Tag | Approach |
+|---|---|---|
+| **≥ 0.8** | EXTRACTED / INFERRED | **Graph-primary**: trust the result, but cross-verify by reading the directly involved files before asserting it as fact. Graph identifies *what* — code reading confirms *why*. |
+| **< 0.8** | INFERRED / AMBIGUOUS | **Code-primary**: treat the graph edge as a hypothesis only. Read the source files of both endpoints and any intermediate callers manually. The graph is a navigation aid — your code reading is the authoritative answer. |
+
+**In practice:**
+
+- **Score ≥ 0.8**: Use the graph path to locate the relevant files. Read those specific files to verify the relationship holds and understand the semantics. Report the finding with the code evidence, not just the graph edge.
+- **Score < 0.8**: Start from the graph node's `source_file` to open the right files, but do not use the edge's `relation` label as a conclusion. Read the code, trace the call chain manually, and form your own judgment. The graph is pointing you in a direction — not giving you an answer.
+- **AMBIGUOUS edges (score < 0.3)**: These are model guesses with weak evidence. Disregard the edge entirely and read the code from scratch. Use only the node `source_file` pointers as a starting hint.
 
 ### Applies to
 
